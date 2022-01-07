@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo "***********************************"
+echo "*          MountCockpit           *"
+echo "*               by                *"
+echo "*          dream-alpha            *"
+echo "***********************************"
+echo ""
+echo "Systemplugin MountCockpit installed successfully."
+echo "Please restart DreamOS now!"
+echo ""
+exit 0
