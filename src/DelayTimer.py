@@ -19,7 +19,6 @@
 # <http://www.gnu.org/licenses/>.
 
 
-from collections import Callable
 from enigma import eTimer
 
 
@@ -29,18 +28,12 @@ timer_instances = []
 class DelayTimer():
 
 	def __init__(self, delay, function, *args):
-		if isinstance(function, Callable):
-			timer_instances.append(self)
-			self.function = function
-			self.args = args
-			self.timer = eTimer()
-			self.timer_conn = self.timer.timeout.connect(self.fire)
-			self.timer.start(delay, True)
-
-	def cancelAll(self):
-		for timer_instance in timer_instances:
-			timer_instance.timer.stop()
-			timer_instances.remove(timer_instance)
+		timer_instances.append(self)
+		self.function = function
+		self.args = args
+		self.timer = eTimer()
+		self.timer_conn = self.timer.timeout.connect(self.fire)
+		self.timer.start(delay, True)
 
 	def fire(self):
 		timer_instances.remove(self)

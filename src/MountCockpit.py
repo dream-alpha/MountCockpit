@@ -65,7 +65,7 @@ class MountCockpit():
 			if bookmark not in self.bookmarks[plugin]:
 				self.bookmarks[plugin].append(bookmark)
 		self.onMountsChange()
-		if config.plugins.mountcockpit.enabled:
+		if config.plugins.mountcockpit.enabled.value:
 			self.startPolling()
 
 	def onMountCockpitEnabledChange(self):
@@ -191,6 +191,9 @@ class MountCockpit():
 			mount_point = self.mounts_table[bookmark]
 		logger.debug("path: %s, mount_point: %s", path, mount_point)
 		return mount_point
+
+	def sameMountPoint(self, plugin, path1, path2):
+		return self.getMountPoint(plugin, path1) == self.getMountPoint(plugin, path2)
 
 ### bookmark
 

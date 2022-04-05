@@ -24,11 +24,17 @@ import logging
 import os
 import sys
 import time
-from DebugInit import getDebugLogLevel, getDebugLogDir
+from Components.config import config, ConfigSubsection, ConfigDirectory, ConfigSelection  # pylint: disable=W0611
+
 
 logger = None
 streamer = None
 format_string = (ID + ": " + "%(levelname)s: %(filename)s: %(funcName)s: %(message)s")
+log_levels = {"ERROR": logging.ERROR, "INFO": logging.INFO, "DEBUG": logging.DEBUG}
+plugin = PLUGIN.lower()
+exec("config.plugins." + plugin + " = ConfigSubsection()")  # pylint: disable=W0122
+exec("config.plugins." + plugin + ".debug_log_path = ConfigDirectory(default='/media/hdd')")  # pylint: disable=W0122
+exec("config.plugins." + plugin + ".debug_log_level = ConfigSelection(default='INFO', choices=log_levels.keys())")  # pylint: disable=W0122
 
 
 def initLogging():
@@ -41,17 +47,18 @@ def initLogging():
 		streamer.setFormatter(formatter)
 		logger.addHandler(streamer)
 		logger.propagate = False
-		setLogLevel(getDebugLogLevel())
+		setLogLevel(log_levels[eval("config.plugins." + plugin + ".debug_log_level").value])
 		logger.info("********** %s %s **********", PLUGIN, VERSION)
 
 
 def setLogLevel(level):
 	logger.setLevel(level)
 	streamer.setLevel(level)
+	logger.info("level: %s", level)
 
 
 def createLogFile():
-	log_dir = getDebugLogDir()
+	log_dir = eval("config.plugins." + plugin + ".debug_log_path").value
 	log_file = os.path.join(log_dir, ID + "_" + time.strftime("%Y%m%d_%H%M%S" + ".log"))
 	logger.info("log_file: %s", log_file)
 	if os.path.exists(log_dir):
