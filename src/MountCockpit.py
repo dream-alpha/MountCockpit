@@ -91,7 +91,7 @@ class MountCockpit():
 				self.init_complete_callback = None
 
 	def initPingCommands(self):
-		logger.debug("iAutoMount.mounts: %s", str(iAutoMount.mounts))
+		logger.debug("iAutoMount.mounts: %s", iAutoMount.mounts)
 		ping_ips = []
 		self.ping_commands = ""
 		for sharename in iAutoMount.mounts:
@@ -110,8 +110,8 @@ class MountCockpit():
 		self.shares_changed = []
 		mount_points = parseMounts()
 		self.mounts_table = {}
-		for plugin in self.bookmarks:
-			for __bookmark in self.bookmarks[plugin]:
+		for _plugin, bookmarks in self.bookmarks.items():
+			for __bookmark in bookmarks:
 				mount_point = None
 				for __mount_point in mount_points:
 					if os.path.realpath(__bookmark).startswith(__mount_point):
@@ -119,7 +119,7 @@ class MountCockpit():
 						break
 				if mount_point is not None:
 					self.mounts_table[__bookmark] = mount_point
-		logger.info("bookmarks: %s", str(self.bookmarks))
+		logger.info("bookmarks: %s", self.bookmarks)
 		logger.info("mounts_table: %s", self.mounts_table.keys())
 		self.initPingCommands()
 		self.check4InitComplete()
@@ -244,3 +244,18 @@ class MountCockpit():
 			home = mounted_bookmarks[0]
 		logger.debug("home: %s", home)
 		return home
+
+	def getVirtualDirs(self, plugin, dirs):
+		logger.info("plugin: %s, dirs: %s", plugin, dirs)
+		bookmarks = self.getMountedBookmarks(plugin)
+		all_dirs = []
+		for adir in dirs:
+			abookmark = self.getBookmark(plugin, adir)
+			if abookmark:
+				movie_dir = adir[len(abookmark):]
+				for bookmark in bookmarks:
+					bdir = os.path.normpath(bookmark + movie_dir)
+					if bdir not in all_dirs:
+						all_dirs.append(bdir)
+		logger.debug("all_dirs: %s", all_dirs)
+		return all_dirs

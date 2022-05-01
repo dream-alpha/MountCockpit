@@ -128,10 +128,10 @@ disable=print-statement,
         dict-keys-not-iterating,
         dict-values-not-iterating,
 
-	R0201, R1716,
-	C0103, C0111, C0301, C0302, C0325, C0326, C0330, C0411, C0412, C1001,
-	W0107, W0123, W0201, W0311, W0312, W0403, W0603, W0703, W1001, W1401,
-	E0401, E0611
+	R0201, R1716, R1732,
+	C0103, C0111, C0206, C0209, C0301, C0302, C0325, C0326, C0330, C0411, C0412, C1001,
+	W0107, W0122, W0123, W0201, W0311, W0312, W0403, W0603, W0703, W1001, W1401, W1514,
+	E0401, E0611, E1136, E1137
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -209,7 +209,7 @@ ignore-docstrings=yes
 ignore-imports=no
 
 # Minimum lines number of a similarity.
-min-similarity-lines=4
+min-similarity-lines=15
 
 
 [MISCELLANEOUS]
