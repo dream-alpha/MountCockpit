@@ -18,12 +18,13 @@
 # For more information on the GNU General Public License see:
 # <http://www.gnu.org/licenses/>.
 
-from Debug import logger
-from Components.config import config, ConfigYesNo, ConfigSubsection
+from Debug import log_levels, logger
+from Components.config import config, ConfigYesNo, ConfigSubsection, ConfigSelection
 
 
 class ConfigInit():
 	def __init__(self):
 		logger.info("...")
-		config.plugins.mountcockpit              = ConfigSubsection()
-		config.plugins.mountcockpit.enabled      = ConfigYesNo(default=True)
+		config.plugins.mountcockpit                 = ConfigSubsection()
+		config.plugins.mountcockpit.enabled         = ConfigYesNo(default=True)
+		config.plugins.mountcockpit.debug_log_level = ConfigSelection(default="INFO", choices=log_levels.keys())

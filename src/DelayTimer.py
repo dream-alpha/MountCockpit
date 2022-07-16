@@ -19,6 +19,7 @@
 # <http://www.gnu.org/licenses/>.
 
 
+from Debug import logger
 from enigma import eTimer
 
 
@@ -38,4 +39,7 @@ class DelayTimer():
 	def fire(self):
 		timer_instances.remove(self)
 		self.timer.stop()
-		self.function(*self.args)
+		try:
+			self.function(*self.args)
+		except Exception as e:
+			logger.error("exception: %s", e)
