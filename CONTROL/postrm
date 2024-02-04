@@ -1,0 +1,8 @@
+#!/bin/sh
+if [ "$1" = "remove" ]; then
+	echo "Removing MountCockpit systemplugin from the system ..."
+	rm -rf /usr/lib/enigma2/python/Plugins/SystemPlugins/MountCockpit > /dev/null 2>&1
+else
+	find /usr/lib/enigma2/python/Plugins/SystemPlugins/MountCockpit -type f -name "*.pyo" -exec rm -f {} \; > /dev/null 2>&1
+fi
+exit 0

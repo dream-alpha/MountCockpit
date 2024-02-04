@@ -1,0 +1,5 @@
+Description: MountCockpit
+Maintainer: dream-alpha
+Package: enigma2-plugin-systemplugins-mountcockpit
+Version: 3.2.8
+Architecture: all
